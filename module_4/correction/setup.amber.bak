@@ -1,0 +1,20 @@
+source leaprc.gaff
+AMBERHOME=/project/cacds/apps/amber/amber14
+# load acceptor molecule
+MOL1 = loadmol2 FM1.mol2
+check MOL1
+
+# load donor molecule
+addAtomTypes{{"B""B""sp3"}}
+MOL2 = loadmol2 FM2.mol2
+check MOL2
+
+AD_CONF = loadpdb AD_CONF.pdb
+check AD_CONF
+
+set AD_CONF box BOX_SIZE
+
+saveamberparm AD_CONF AD_CONF.prmtop AD_CONF.inpcrd
+
+quit
+

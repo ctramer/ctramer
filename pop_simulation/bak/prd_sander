@@ -1,0 +1,28 @@
+#!/bin/bash
+#SBATCH  -J NAME_prd            # Job Name
+#SBATCH  -o NAME_prd.o%j        # Output and error file name (%j expands to jobID)
+#SBATCH  -N 1                   # Number of nodes, ensure that all cores are on one machine
+#SBATCH  -n 28         		# Total number of mpi tasks requested
+#SBATCH  -t 24:00:00	        # Run time (hh:mm:ss) - 2 hours
+
+module purge
+module load AMBER/12
+rundir=/$TMPDIR/"$SLURM_JOB_USER"_"$SLURM_JOB_ID"
+/bin/rm -rf $rundir
+/bin/mkdir -p $rundir
+cp * $rundir
+cd $rundir
+
+date
+
+  mpirun sander.MPI                 \
+  -O -i prd.in -o NAME.out  \
+  -p NAME.prmtop -c NAME.inpcrd     \
+  -r NAME.rst -x NAME.mdcrd     
+
+cp -auv *  $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR/
+rm -rf $rundir/
+
+date
+echo Done!

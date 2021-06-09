@@ -1,0 +1,83 @@
+#!/bin/bash
+#SBATCH  -J CONF_ACCEPTOR_NUM            # Job Name
+#SBATCH  -o CONF_ACCEPTOR_NUM.o%j        # Output and error file name (%j expands to jobID)
+#SBATCH  -N 1                   # Number of nodes, ensure that all cores are on one machine
+#SBATCH  -n 28
+#SBATCH  -p medium               # Regular or debug
+#SBATCH  -t 70:00:00	        # Run time (hh:mm:ss)
+
+date
+
+module purge
+module load AMBER
+
+#Set up SLURM directory in scratch space with necessary files
+rundir=/$TMP_DIR/"$SLURM_JOB_USER"_"$SLURM_JOB_ID"
+/bin/rm -rf $rundir
+/bin/mkdir -p $rundir
+
+cp eq_CONF.in $rundir
+cp prd_CONF.in $rundir
+cp prd_CONF_energy.in $rundir
+cp AAADDD_CONF_DONOR.prmtop $rundir
+cp AAADDD_CONF_ACCEPTOR.prmtop $rundir
+cp CSCSCS_conf.rst $rundir
+
+cd $rundir
+
+sander=$AMBERHOME/bin/sander.MPI
+    
+date
+
+#script for equilibrating system with fixed pair with donor PES
+mpirun sander.MPI                                        \
+  -O -i eq_CONF.in -o CONF_DONOR_TRAJ_DONOR_NUM.out        \
+  -p AAADDD_CONF_DONOR.prmtop -c CONF_DONOR_TRAJ_DONOR_d.rst  \
+  -r CONF_DONOR_TRAJ_DONOR_NUM.rst -x CONF_DONOR_TRAJ_DONOR_NUM.nc   \
+  -ref CSCSCS_CONF.rst
+
+
+  #script for creating trajectory with donor PES
+  mpirun sander.MPI                                        \
+  -O -i prd_CONF.in -o CONF_DONOR_TRAJ_DONOR_NUM.out        \
+  -p AAADDD_CONF_DONOR.prmtop -c CONF_DONOR_TRAJ_DONOR_0.rst  \
+  -r CONF_DONOR_TRAJ_DONOR_NUM.rst -x CONF_DONOR_TRAJ_DONOR_NUM.nc   \
+  -ref CSCSCS_CONF.rst
+
+date
+  #calculates energy for donor PES on above trajectory
+  mpirun sander.MPI                  \
+  -O -i prd_conf_energy.in -o CONF_DONOR_2_TRAJ_DONOR_NUM.out     \
+  -p CSCSCS_conf_bnl_DONOR.prmtop -c CONF_DONOR_TRAJ_DONOR_0.rst  \
+  -r CONF_DONOR_2_TRAJ_DONOR_NUM.rst -y CONF_DONOR_TRAJ_DONOR_NUM.nc   \
+  -ref CSCSCS_conf.rst
+
+date
+  #calculates energy for accceptor PES on above trajectory
+  mpirun sander.MPI                                            \
+  -O -i prd_conf_energy.in -o CONF_ACCEPTOR_TRAJ_DONOR_NUM.out  \
+  -p CSCSCS_conf_bnl_ACCEPTOR.prmtop -c CONF_DONOR_TRAJ_DONOR_0.rst \
+  -r CONF_ACCEPTOR_TRAJ_DONOR_NUM.rst -y CONF_DONOR_TRAJ_DONOR_NUM.nc  \
+  -ref CSCSCS_conf.rst
+
+date
+  #grabs the energies from the above input files into separate files
+  grep EAMBER CONF_DONOR_2_TRAJ_DONOR_NUM.out > energies_DONOR_NUM.dat
+  awk '{print $3}' energies_DONOR_NUM.dat > CONF_E_DONOR_2_TRAJ_DONOR_NUM.dat
+
+  grep EAMBER CONF_ACCEPTOR_TRAJ_DONOR_NUM.out > energies_ACCEPTOR_NUM.dat
+  awk '{print $3}' energies_ACCEPTOR_NUM.dat > CONF_E_ACCEPTOR_TRAJ_DONOR_NUM.dat 
+
+#combines all energies files into 1 file per PES
+cat CONF_E_DONOR_2_TRAJ_DONOR_*.dat > CONF_E_DONOR_2_TRAJ_DONOR.dat
+cat CONF_E_ACCEPTOR_TRAJ_DONOR_*.dat > CONF_E_ACCEPTOR_TRAJ_DONOR.dat
+
+rm energies*
+
+#moves all files back to original directory
+cp -auv * $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR/
+rm -rf $rundir/
+
+date
+echo Done!

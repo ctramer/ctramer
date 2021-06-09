@@ -1,0 +1,51 @@
+# Build a mixture of MOLEC1 and MOLEC2
+# pattern AAADDD
+# layer 1:  5 x 5 MOLEC2 
+# layer 2:  5 x 5 MOLEC2 
+# layer 3:  5 x 5 MOLEC2 
+# layer 4:  5 x 5 MOLEC1
+# layer 5:  5 x 5 MOLEC1
+# layer 6:  5 x 5 MOLEC1
+
+tolerance 2.0
+
+# The file type of input and output files is PDB
+filetype pdb
+
+# The name of the output file
+
+output AAADDD_NUM.pdb
+
+# size of MOLEC1 (8, 8 , 8) should use a box sized (60, 60, 10)
+# size of MOLEC2 (22, 14, 5) should use a box sized (60, 60, 25)
+# 10 Ang between layers of different molecules for equilibration
+
+structure MOLEC1.pdb
+  number 25
+  inside box 0. 0. 0. 60. 60. 10.
+end structure
+
+structure MOLEC1.pdb
+  number 25
+  inside box 0. 0. 10. 60. 60. 20.
+end structure
+
+structure MOLEC1.pdb
+  number 25
+  inside box 0. 0. 20. 60. 60. 30.
+end structure
+
+structure MOLEC2.pdb
+  number 25
+  inside box 0. 0. 40. 60. 60. 65.
+end structure
+
+structure MOLEC2.pdb
+  number 25
+  inside box 0. 0. 65. 60. 60. 90.
+end structure
+
+structure MOLEC2.pdb
+  number 25
+  inside box 0. 0. 90. 60. 60. 115.
+end structure

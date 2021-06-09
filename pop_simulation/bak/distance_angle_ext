@@ -1,0 +1,28 @@
+#!/bin/bash
+#SBATCH  -J NAME_ext_distang        # Job Name
+#SBATCH  -o NAME_ext_distang.o%j    # Output and error file name (%j expands to jobID)
+#SBATCH  -N 1                   # Number of nodes, ensure that all cores are on one machine
+#SBATCH  -n 1          		# Total number of mpi tasks requested
+#SBATCH  -p medium              # Partition short <= 4 hours
+#SBATCH  -t 14:00:00	        # Run time (hh:mm:ss) - 2 hours
+#SBATCH --mem 2000		# max amount of mbs in memory needed
+
+module purge
+module load vmd
+
+rundir=/scratch/"$SLURM_JOB_USER"_"$SLURM_JOB_ID"
+/bin/rm -rf $rundir
+/bin/mkdir -p $rundir
+cp * $rundir
+cd $rundir
+
+date
+
+vmd -dispdev text -parm7 NAME_new.prmtop -crdbox NAME_ext.mdcrd -e dist_angle_ext.tcl
+
+cp -auv * $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR
+rm -rf $rundir/
+
+date
+echo Done!

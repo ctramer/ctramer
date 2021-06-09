@@ -1,0 +1,17 @@
+source leaprc.gaff
+
+# load C70
+C70 = loadmol2 c70.mol2
+check C70
+
+# load DBP
+DBP = loadmol2 dbp.mol2
+check DBP
+
+AAADDD = loadpdb AAADDD_NUM.pdb
+check AAADDD
+
+setbox AAADDD vdw
+saveamberparm AAADDD AAADDD.prmtop AAADDD_NUM.inpcrd
+
+quit

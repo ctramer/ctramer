@@ -1,0 +1,6 @@
+# convert xyz format to pdb format
+
+set sel [atomselect top "all" frame 1]
+$sel writepdb "NNN.pdb"
+
+quit

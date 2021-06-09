@@ -1,0 +1,94 @@
+/project/cacds/apps/vmd-1.9.4/vmd_LINUXAMD64: /lib64/libGL.so.1: no version information available (required by /project/cacds/apps/vmd-1.9.4/vmd_LINUXAMD64)
+Info) VMD for LINUXAMD64, version 1.9.4a9 (October 19, 2017)
+Info) http://www.ks.uiuc.edu/Research/vmd/                         
+Info) Email questions and bug reports to vmd@ks.uiuc.edu           
+Info) Please include this reference in published work using VMD:   
+Info)    Humphrey, W., Dalke, A. and Schulten, K., `VMD - Visual   
+Info)    Molecular Dynamics', J. Molec. Graphics 1996, 14.1, 33-38.
+Info) -------------------------------------------------------------
+Info) Multithreading available, 28 CPUs detected.
+Info)   CPU features: SSE2 AVX AVX2 FMA 
+Info) Free system memory: 110GB (87%)
+Info) No CUDA accelerator devices available.
+Info) Dynamically loaded 2 plugins in directory:
+Info) /project/cacds/apps/vmd-1.9.4/plugins/LINUXAMD64/molfile
+Info) File loading in progress, please wait.
+Info) Using plugin parm7 for structure file ../../../pop_simulation/AAADDD_4/AAADDD_4_new.prmtop
+Info) Analyzing structure ...
+Info)    Atoms: 12750
+Info)    Bonds: 16425
+Info)    Angles: 0  Dihedrals: 0  Impropers: 0  Cross-terms: 0
+Info)    Bondtypes: 0  Angletypes: 0  Dihedraltypes: 0  Impropertypes: 0
+Info)    Residues: 150
+Info)    Waters: 0
+Info)    Segments: 1
+Info)    Fragments: 150   Protein: 0   Nucleic: 0
+Info) Using plugin crdbox for coordinates from file ../../../pop_simulation/AAADDD_4/AAADDD_4_new.mdcrd
+Info) Coordinate I/O rate 134.9 frames/sec, 19 MB/sec, 7.4 sec
+Info) Finished with coordinate file ../../../pop_simulation/AAADDD_4/AAADDD_4_new.mdcrd.
+atomselect0
+Info) Opened coordinate file AD_1.pdb for writing.
+Info) Finished with coordinate file AD_1.pdb.
+Info) Opened coordinate file AD_1.rst for writing.
+Info) Finished with coordinate file AD_1.rst.
+Info) VMD for LINUXAMD64, version 1.9.4a9 (October 19, 2017)
+Info) Exiting normally.
+ERROR) Error reading Tcl input: bad file number
+-I: Adding /project/cacds/apps/amber/amber14/dat/leap/prep to search path.
+-I: Adding /project/cacds/apps/amber/amber14/dat/leap/lib to search path.
+-I: Adding /project/cacds/apps/amber/amber14/dat/leap/parm to search path.
+-I: Adding /project/cacds/apps/amber/amber14/dat/leap/cmd to search path.
+-s: Ignoring startup file: leaprc
+-f: Source setup.amber.
+
+Welcome to LEaP!
+Sourcing: ./setup.amber
+----- Source: /project/cacds/apps/amber/amber14/dat/leap/cmd/leaprc.gaff
+----- Source of /project/cacds/apps/amber/amber14/dat/leap/cmd/leaprc.gaff done
+Log file: ./leap.log
+Loading parameters: /project/cacds/apps/amber/amber14/dat/leap/parm/gaff.dat
+Reading title:
+AMBER General Force Field for organic molecules (Version 1.7, Nov 2013)
+Loading Mol2 file: ./c70.mol2
+Reading MOLECULE named C70
+Checking 'C70'....
+Checking parameters for unit 'C70'.
+Checking for bond parameters.
+Checking for angle parameters.
+Unit is OK.
+Loading Mol2 file: ./dbp.mol2
+Reading MOLECULE named DBP
+Checking 'DBP'....
+Checking parameters for unit 'DBP'.
+Checking for bond parameters.
+Checking for angle parameters.
+Unit is OK.
+Loading PDB file: ./AD_1.pdb
+  total atoms in file: 170
+Checking 'AD_1'....
+Checking parameters for unit 'AD_1'.
+Checking for bond parameters.
+Checking for angle parameters.
+Unit is OK.
+Checking Unit.
+Building topology.
+Building atom parameters.
+Building bond parameters.
+Building angle parameters.
+Building proper torsion parameters.
+Building improper torsion parameters.
+ total 36 improper torsions applied
+Building H-Bond parameters.
+Incorporating Non-Bonded adjustments.
+Not Marking per-residue atom chain types.
+Marking per-residue atom chain types.
+  (Residues lacking connect0/connect1 - 
+   these don't have chain types marked:
+
+	res	total affected
+
+	C70	1
+	DBP	1
+  )
+ (no restraints)
+	Quit

@@ -1,0 +1,41 @@
+#!/bin/bash
+#SBATCH  -J NAME_prd            # Job Name
+#SBATCH  -o NAME_prd.o%j        # Output and error file name (%j expands to jobID)
+#SBATCH  -N 1                   # Number of nodes, ensure that all cores are on one machine
+#SBATCH  -n 28         		# Total number of mpi tasks requested
+#SBATCH  -t 24:00:00	        # Run time (hh:mm:ss) - 2 hours
+
+module purge
+module load amber_name
+rundir=/$TMPDIR/"$SLURM_JOB_USER"_"$SLURM_JOB_ID"
+/bin/rm -rf $rundir
+/bin/mkdir -p $rundir
+cp * $rundir
+cd $rundir
+
+mpirun -np 4 sander.MPI -O -i min.in -o NAME_min.out -p prmtop -c init.crd -r NAME_min.rst 
+    
+date
+echo "Done with minimization!"
+echo "Heating using NVT!"
+
+  mpirun sander.MPI  \
+  -O -i heat.in -o NAME_heat.out   \
+  -p prmtop -c NAME_min.rst           \
+  -r NAME_heat.rst -x NAME_heat.mdcrd     
+
+date
+echo "Done with heating!"
+echo "Equlibrating using NPT!"
+
+  mpirun sander.MPI \
+  -O -i npt.in -o NAME_prd.out   \
+  -p prmtop -c NAME_heat.rst           \
+  -r NAME_npt.rst -x NAME_npt.mdcrd     
+
+cp -auv *  $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR/
+rm -rf $rundir/
+
+date
+echo Done!

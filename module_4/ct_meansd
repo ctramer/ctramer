@@ -1,0 +1,22 @@
+#!/bin/bash
+
+for conf in 1 2 3;do
+	cd config_$conf
+	rm ctdata_${conf}.dat
+	grep EAMBER ${conf}_EX_ENER_EX_*.out > energies_EX.dat
+        awk '{print $4}' energies_EX.dat > ${conf}_EX_ENER_EX.dat
+	
+	for state in $(ls *CT*.prmtop | cut -f 3 -d "_"| cut -f 1 -d ".");do
+
+		grep EAMBER ${conf}_${state}_ENER_EX_*.out > energies_${state}.dat
+	        awk '{print $4}' energies_${state}.dat > ${conf}_${state}_ENER_EX.dat
+
+
+
+		paste ${conf}_EX_ENER_EX.dat ${conf}_${state}_ENER_EX.dat | awk ' {print $1 - $2; }' > ${conf}_E_GAP_${state}_EX.dat
+		awk '{ total += $1 } END { printf "%.10g\n",  total/NR*.0433641046}' ${conf}_E_GAP_${state}_EX.dat >> ctdata_${conf}.dat
+		#awk '{x+=$0;y+=$0^2}END{printf "%.10g\n", sqrt(y/NR-(x/NR)^2)*.0433641046}' ${conf}_E_GAP_${state}_EX.dat >> ctdata_${conf}.dat
+	done
+	cd ..
+done
+

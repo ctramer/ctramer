@@ -1,0 +1,17 @@
+source leaprc.gaff
+
+# load MOLEC1
+MOLEC1 = loadmol2 MOLEC1.mol2
+check MOLEC1
+
+# load MOLEC2
+MOLEC2 = loadmol2 MOLEC2.mol2
+check MOLEC2
+
+AAADDD = loadpdb AAADDD_NUM.pdb
+check AAADDD
+
+setbox AAADDD vdw
+saveamberparm AAADDD AAADDD_0.prmtop AAADDD_NUM.inpcrd
+
+quit

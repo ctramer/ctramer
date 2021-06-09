@@ -1,0 +1,50 @@
+#!/bin/bash
+#SBATCH  -J TRAJ_CONF_NUM            # Job Name
+#SBATCH  -o TRAJ_CONF_NUM.o%j        # Output and error file name (%j expands to jobID)
+#SBATCH  -N 1                   # Number of nodes, ensure that all cores are on one machine
+#SBATCH  -n 28
+#SBATCH  -t 20:00:00	        # Run time (hh:mm:ss)
+
+date
+
+module purge
+module load AMBER
+
+#Set up SLURM directory in scratch space with necessary files
+rundir=/$TMPDIR/"$SLURM_JOB_USER"_"$SLURM_JOB_ID"
+/bin/rm -rf $rundir
+/bin/mkdir -p $rundir
+
+cp eq_CONF.in $rundir
+cp prd_CONF.in $rundir
+cp AAADDD_CONF_DONOR.prmtop $rundir
+cp AAADDD_CONF.rst $rundir
+
+cd $rundir
+
+sander=$AMBERHOME/bin/sander.MPI
+    
+date
+
+#script for equilibrating system with fixed pair with donor PES
+mpirun sander.MPI                                        \
+  -O -i eq_CONF.in -o CONF_DONOR_EQ_DONOR_NUM.out        \
+  -p AAADDD_CONF_DONOR.prmtop -c AAADDD_CONF.rst  \
+  -r CONF_DONOR_EQ_DONOR_NUM.rst    \
+  -ref AAADDD_CONF.rst
+
+
+  #script for creating trajectory with donor PES
+  mpirun sander.MPI                                        \
+  -O -i prd_CONF.in -o CONF_DONOR_TRAJ_DONOR_NUM.out        \
+  -p AAADDD_CONF_DONOR.prmtop -c CONF_DONOR_EQ_DONOR_NUM.rst  \
+  -r CONF_DONOR_TRAJ_DONOR_NUM.rst -x CONF_DONOR_TRAJ_DONOR_NUM.nc  \
+  -ref AAADDD_CONF.rst
+
+#moves all files back to original directory
+cp -auv * $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR/
+rm -rf $rundir/
+
+date
+echo Done!

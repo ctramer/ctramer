@@ -1,0 +1,37 @@
+DFTLEVEL 1      1# BNL:1, B3LYP:2, wPBEh:3, SRSH:4
+PHASE    0      2# GAS:0, PCM:1
+NUMGEOM  6      3# Add 1 to exact number of geometry for loop purpose!
+NUMTOT   12     4# Number of total atoms in system
+NUMDON   6      5# Total number of atoms in donor fragment
+SNUMDON  7      6# Where the donor fragment starts,SNUMDON=NUMACC+1
+NUMACC   6      7# Total number of atoms in acceptor fragment
+NUMEXS   25     8# Desired number of excited states; see below
+BASISSET 6-31G* 9# SV, 6-31G*... consult to the literature
+DIEL     4.2    10# Dielectric value in PCM section
+OPTDIEL  1.77   11# Optical dielectric value in PCM section
+NOMEGA   167    12# Tune the omega for BNL and wPBEh based functionals
+TUNOMEGA 0      13# Enter 1 for tuning the omega for each geometry. Not implemented yet!
+
+Additional explanation for;
+1) NUMEXS: Use the tested value of 25 for SubPC-C60 and triad projects. Computational cost increases when higher values are used.
+
+2) SNUMDON=NUMACC+1 if acceptor molecule is the first in geom.txt file
+For example; in SubPC-C60 project first 60 atoms in txt file is C60 which is acceptor molecule and next 44 atoms belongs to SubPC which is donor.
+So in the input file following indexings are printed,
+
+sts_acceptor 1-60
+sts_donor    61-104
+
+3) In the case of TRIAD we have two donor molecules, namely, porphyrin(P) and carotenoid(C) and one acceptor molecule, C60.
+So, in order to get correct charge separation from donor to acceptor
+one need to define the regions as follow,
+
+To get the CT states for porphrin;
+sts_acceptor 1-60
+sts_donor    61-125
+
+to get the CT states for carotenoid;
+sts_acceptor 1-60
+sts_donor    126-207
+
+4) DIEL and OPTDIEL: Consult to the literature for the studied system

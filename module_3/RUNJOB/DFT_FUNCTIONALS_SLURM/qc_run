@@ -1,0 +1,33 @@
+#!/bin/bascd h
+#SBATCH -J qc_FUNCTIONAL_GEOM # job name
+#SBATCH -n 40 -N 1
+#SBATCH -o qc_FUNCTIONAL_GEOM.o%j # output and error file name (%j expands to jobID)
+#SBATCH -t 24:00:00 # run time (hh:mm:ss) - 24 hours
+
+date
+
+module purge
+module add intel/psxe-2019-64-bit
+export QC=/project/cacds/cases/qchem/qchem441
+export QCAUX=/project/cacds/cases/qchem/qchem441/qcaux
+export OMP_NUM_THREADS=4
+
+rundir=$TMP_DIR/"$SLURM_JOB_USER"_"$SLURM_JOB_ID"
+/bin/rm -rf $rundir
+/bin/mkdir -p $rundir
+
+cp GEOM.in $rundir
+
+cd $rundir
+
+date
+
+mpirun -n 8 /project/cacds/tickets/2590_jacob/qcprog.exe GEOM.in > GEOM.out
+
+cp -auv * $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR/
+rm -rf $rundir/
+
+date
+
+echo Done!

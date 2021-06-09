@@ -1,0 +1,58 @@
+#!/bin/bash
+
+cp ../system_construction/states/configs.dat configs.dat
+rm -rf PRMTOP.EX
+cp -r ../system_construction/PRMTOP.EX PRMTOP.EX
+for config in 1 2 3; do
+	DONOR="EX";
+	frame=$(awk -v var="$config" 'NR==var {print $1}' configs.dat)
+	index1=$(awk -v var="$config" 'NR==var {print $2}' configs.dat)
+        index2=$(awk -v var="$config" 'NR==var {print $3}' configs.dat)
+	rm -rf config_${config}	
+	mkdir config_${config}	
+
+	cp extract.tcl extract_frame.tcl
+	sed -i "s/FRAME/$frame/g" extract_frame.tcl
+	sed -i "s/CONF/$config/g" extract_frame.tcl
+	module load VMD
+	vmd -dispdev none -parm7 ../pop_simulation/AAADDD_4/AAADDD_4_new.prmtop \
+		-crdbox ../pop_simulation/AAADDD_4/AAADDD_4_new.mdcrd \
+		-e extract_frame.tcl
+	rm extract_frame.tcl
+	mv AAADDD_${config}.rst config_${config}/AAADDD_${config}.rst
+	
+	cp ct_trajectory config_${config}/ct_trajectory_${config}
+	cp eq_CONF.in config_${config}/eq_${config}.in
+	cp prd_CONF.in config_${config}/prd_${config}.in
+	cp prd_CONF_energy.in config_${config}/prd_${config}_energy.in
+	cp PRMTOP.EX/AAADDD_${config}_*.prmtop config_${config}/
+	cd config_${config}
+	sed -i "s/CONF/$config/g" ct_trajectory_${config}
+	sed -i "s/DONOR/$DONOR/g" ct_trajectory_${config}
+	sed -i "s/INDEX1/$index1/g" eq_${config}.in
+	sed -i "s/INDEX2/$index2/g" eq_${config}.in
+	sed -i "s/INDEX1/$index1/g" prd_${config}.in
+        sed -i "s/INDEX2/$index2/g" prd_${config}.in
+	sed -i "s/INDEX1/$index1/g" prd_${config}_energy.in
+        sed -i "s/INDEX2/$index2/g" prd_${config}_energy.in
+	
+	for i in {1..5}
+	do
+
+		cp ct_trajectory_${config} ct_trajectory_${config}_$i
+		sed -i "s/NUM/$i/g" ct_trajectory_${config}_$i
+		jobid=$(sbatch ct_trajectory_${config}_$i |cut -f 4 -d " ")
+		for state in $(ls *.prmtop | cut -f 3 -d "_"| cut -f 1 -d ".");do
+			cp ../ct_recalculate ct_recalculate_${config}_${state}_$i
+			sed -i "s/STATE/$state/g" ct_recalculate_${config}_${state}_$i
+			sed -i "s/DONOR/$DONOR/g" ct_recalculate_${config}_${state}_$i
+			sed -i "s/CONF/$config/g" ct_recalculate_${config}_${state}_$i
+			sed -i "s/NUM/$i/g" ct_recalculate_${config}_${state}_$i
+			sbatch --dependency=afterany:$jobid ct_recalculate_${config}_${state}_$i
+		done
+
+	done
+
+	cd ..
+done
+

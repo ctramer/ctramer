@@ -1,0 +1,25 @@
+There are two steps to be done in this section of the calculations
+
+1) Please inspect the input.dat file carefully for your QCHEM parameters.
+
+2) After you have set the input parameters, run the ./RUN_DFTFUNC.sh 
+   in the RUNJOB folder. Thil will read the geometries from GEOMETRIES
+   folder and generate the XX.in, XX.txt, XX.pbs and finally XX.out
+   in TDDFT folder. You need these all XX.out files.
+   This QCHEM runs will take several hours depending on 
+   the architecture/environment of the server.  
+
+MORE INFORMATION ON THE FILE ORGANIZATION:
+
+1) RUNJOB folder consists of several folders as explained below,
+GEOMETRIES: Please put all your geometries with index number.
+            Please see the examples in GEOMETRIES folder.
+DFT_FUNCTIONALS: It has several DFT functionals, BNL, B3LYP, wPBEh and SRSH
+                in GAS and PCM.
+TDDFT:This folder will be generated after running the RUN_DFTFUNC.sh script.
+      If it is necessary save the output files to be used later.
+      Please delete this folder for next run.
+THE-TDDFT-outputs: Consists of TOP, HOLLOW and EDGE (shortly THE) output files
+                    assigned as 1.out, 2.out and 3.out, respectively.
+                    These results have been used already in PHYS REV Applied reference paper
+

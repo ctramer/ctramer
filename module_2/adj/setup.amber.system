@@ -1,0 +1,17 @@
+source leaprc.gaff
+
+# load first molecule
+MOLEC1 = loadmol2 MOLEC1.mol2
+check MOLEC1
+
+# load second molecule
+MOLEC2 = loadmol2 MOLEC2.mol2
+check MOLEC2
+
+SYSTEM = loadpdb SYSTEM.pdb
+check SYSTEM
+
+setbox SYSTEM vdw
+saveamberparm SYSTEM SYSTEM.prmtop SYSTEM.inpcrd
+
+quit

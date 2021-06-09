@@ -1,0 +1,19 @@
+Equilibration run for system with fixed pair (Length nstlim*dt ps)
+For rst7 file with no velocities
+ &cntrl
+   igb = 0, imin = 0, ntx = 1, irest = 0,
+   ntb = 1, cut = 10.,
+   ntpr = 10000, ntwx = 10000, ntwr = 500000,
+   nstlim = 2000000, dt = 0.002,
+   ntc = 2, ntf = 2, iwrap = 0,
+   ntt = 3, gamma_ln=0.1,
+   tempi = 298.15, temp0 = 298.15,
+   tautp = 0.5, ig = -1, vlimit = 10.0,
+   nmropt = 0,
+   ipol   = 0,
+   ntr    = 1,
+   ioutfm = 1,
+   restraint_wt = 50,
+   restraintmask = ':INDEX1,INDEX2',
+ &end
+

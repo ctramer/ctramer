@@ -1,0 +1,355 @@
+log started: Wed Aug 19 00:49:26 2020
+
+Log file: ./leap.log
+>> #
+>> # ----- leaprc for loading the general Amber Force field.
+>> #       This file is mostly for use with Antechamber
+>> #
+>> #	load atom type hybridizations
+>> #
+>> addAtomTypes {
+>> 	{ "h1"  "H" "sp3" }
+>> 	{ "h2"  "H" "sp3" }
+>> 	{ "h3"  "H" "sp3" }
+>> 	{ "h4"  "H" "sp3" }
+>> 	{ "h5"  "H" "sp3" }
+>> 	{ "ha"  "H" "sp3" }
+>> 	{ "hc"  "H" "sp3" }
+>> 	{ "hn"  "H" "sp3" }
+>> 	{ "ho"  "H" "sp3" }
+>> 	{ "hp"  "H" "sp3" }
+>> 	{ "hs"  "H" "sp3" }
+>> 	{ "hw"  "H" "sp3" }
+>> 	{ "hx"  "H" "sp3" }
+>> 	{ "o"  "O" "sp2" }
+>> 	{ "o2"  "O" "sp2" }
+>> 	{ "oh"  "O" "sp3" }
+>> 	{ "os"  "O" "sp3" }
+>> 	{ "ow"  "O" "sp3" }
+>> 	{ "c"  "C" "sp2" }
+>> 	{ "c1"  "C" "sp2" }
+>> 	{ "c2"  "C" "sp2" }
+>> 	{ "c3"  "C" "sp3" }
+>> 	{ "ca"  "C" "sp2" }
+>> 	{ "cc"  "C" "sp2" }
+>> 	{ "cd"  "C" "sp2" }
+>> 	{ "ce"  "C" "sp2" }
+>> 	{ "cf"  "C" "sp2" }
+>> 	{ "cg"  "C" "sp2" }
+>> 	{ "ch"  "C" "sp2" }
+>> 	{ "cp"  "C" "sp2" }
+>> 	{ "cq"  "C" "sp2" }
+>> 	{ "cu"  "C" "sp2" }
+>> 	{ "cv"  "C" "sp2" }
+>> 	{ "cx"  "C" "sp2" }
+>> 	{ "cy"  "C" "sp2" }
+>> 	{ "cz"  "C" "sp2" }
+>> 	{ "n"   "N" "sp2" }
+>> 	{ "n1"  "N" "sp2" }
+>> 	{ "n2"  "N" "sp2" }
+>> 	{ "n3"  "N" "sp3" }
+>> 	{ "n4"  "N" "sp3" }
+>> 	{ "na"  "N" "sp2" }
+>> 	{ "nb"  "N" "sp2" }
+>> 	{ "nc"  "N" "sp2" }
+>> 	{ "nd"  "N" "sp2" }
+>> 	{ "ne"  "N" "sp2" }
+>> 	{ "nf"  "N" "sp2" }
+>> 	{ "nh"  "N" "sp2" }
+>> 	{ "no"  "N" "sp2" }
+>> 	{ "s"   "S" "sp2" }
+>> 	{ "s2"   "S" "sp2" }
+>> 	{ "s3"   "S" "sp3" }
+>> 	{ "s4"   "S" "sp3" }
+>> 	{ "s6"   "S" "sp3" }
+>> 	{ "sh"   "S" "sp3" }
+>> 	{ "ss"   "S" "sp3" }
+>> 	{ "sx"   "S" "sp3" }
+>> 	{ "sy"   "S" "sp3" }
+>> 	{ "p2"   "P" "sp2" }
+>> 	{ "p3"   "P" "sp3" }
+>> 	{ "p4"   "P" "sp3" }
+>> 	{ "p5"   "P" "sp3" }
+>> 	{ "pb"   "P" "sp3" }
+>> 	{ "pc"   "P" "sp3" }
+>> 	{ "pd"   "P" "sp3" }
+>> 	{ "pe"   "P" "sp3" }
+>> 	{ "pf"   "P" "sp3" }
+>> 	{ "px"   "P" "sp3" }
+>> 	{ "py"   "P" "sp3" }
+>> 	{ "f"   "F" "sp3" }
+>> 	{ "cl"  "Cl" "sp3" }
+>> 	{ "br"  "Br" "sp3" }
+>> 	{ "i"   "I"  "sp3" }
+>> }
+>> #
+>> #	Load the general force field parameter set.
+>> #
+>> gaff = loadamberparams gaff.dat
+Loading parameters: /project/cacds/apps/amber/amber14/dat/leap/parm/gaff.dat
+Reading title:
+AMBER General Force Field for organic molecules (Version 1.7, Nov 2013)
+> 
+> AMBERHOME=/project/cacds/apps/amber/amber14
+> # load acceptor molecule
+> C70 = loadmol2 c70.mol2
+Loading Mol2 file: ./c70.mol2
+Reading MOLECULE named C70
+> check C70
+Checking 'C70'....
+Checking parameters for unit 'C70'.
+Checking for bond parameters.
+Checking for angle parameters.
+Unit is OK.
+> 
+> # load donor molecule
+> addAtomTypes{{"B""B""sp3"}}
+> DBP = loadmol2 dbp.mol2
+Loading Mol2 file: ./dbp.mol2
+Reading MOLECULE named DBP
+> check DBP
+Checking 'DBP'....
+Checking parameters for unit 'DBP'.
+Checking for bond parameters.
+Checking for angle parameters.
+Unit is OK.
+> 
+> AD_1 = loadpdb AD_1.pdb
+Loading PDB file: ./AD_1.pdb
+Enter zPdbReadScan from call depth  0.
+Exit  zPdbReadScan from call depth  0.
+Matching PDB residue names to LEaP variables.
+(Residue 0: C70, Terminal/beginning, was not found in name map.)
+(Residue 1: DBP, Terminal/last, was not found in name map.)
+Starting new chain with DBP
+  total atoms in file: 170
+> check AD_1
+Checking 'AD_1'....
+Checking parameters for unit 'AD_1'.
+Checking for bond parameters.
+Checking for angle parameters.
+Unit is OK.
+> 
+> set AD_1 box {59.4659996  68.8960037  98.2939987}
+> 
+> saveamberparm AD_1 AD_1.prmtop AD_1.inpcrd
+Checking Unit.
+Building topology.
+Building atom parameters.
+Building bond parameters.
+Building angle parameters.
+Building proper torsion parameters.
+Building improper torsion parameters.
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C61 C67 C69 C68
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C62 C65 C68 C69
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C60 C66 C67 C69
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C64 C65 C66 C67
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C63 C66 C65 C68
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C53 C54 C64 C66
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C51 C52 C63 C65
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C50 C58 C62 C68
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C57 C59 C61 C69
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C55 C56 C60 C67
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C47 C58 C59 C61
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C48 C59 C58 C62
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C46 C56 C57 C61
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C41 C57 C56 C60
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C40 C54 C55 C60
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C43 C55 C54 C64
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C42 C52 C53 C64
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C44 C53 C52 C63
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C45 C50 C51 C63
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C49 C51 C50 C62
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C35 C48 C49 C50
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C37 C49 C48 C58
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C36 C46 C47 C59
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C39 C47 C46 C57
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C34 C44 C45 C51
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C33 C45 C44 C52
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C31 C42 C43 C54
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C32 C43 C42 C53
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C38 C40 C41 C56
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C30 C41 C40 C55
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C27 C38 C39 C46
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C28 C39 C38 C41
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C25 C36 C37 C48
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C26 C37 C36 C47
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C24 C34 C35 C49
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C20 C35 C34 C45
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C21 C32 C33 C44
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C23 C33 C32 C42
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C22 C30 C31 C43
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C29 C31 C30 C40
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C7 C28 C29 C30
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C9 C29 C28 C38
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C10 C26 C27 C39
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C12 C27 C26 C36
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C13 C24 C25 C37
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C15 C25 C24 C35
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C19 C22 C23 C32
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C6 C23 C22 C31
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C18 C20 C21 C33
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C16 C21 C20 C34
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C5 C18 C19 C23
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C17 C19 C18 C21
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C C16 C17 C18
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C15 C17 C16 C20
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C14 C16 C15 C24
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C4 C13 C14 C15
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C12 C14 C13 C25
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C11 C13 C12 C26
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C3 C10 C11 C12
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C9 C11 C10 C27
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C8 C10 C9 C28
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C2 C7 C8 C9
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C6 C8 C7 C29
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C5 C7 C6 C22
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C1 C6 C5 C19
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C C3 C4 C14
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C2 C4 C3 C11
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C1 C3 C2 C8
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C C2 C1 C5
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C1 C4 C C17
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C26 C49 C61 C60
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C23 C52 C60 C61
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C22 C53 C59 C58
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C19 C56 C58 C59
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C4 C18 C57 C56
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C55 C57 C56 C58
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C52 C54 C53 C59
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C51 C53 C52 C60
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C48 C50 C49 C61
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C27 C41 C48 C49
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C41 C43 C42 C47
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C40 C42 C41 C48
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C35 C39 C40 C41
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C28 C36 C35 C40
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C28 C30 C29 C34
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C27 C29 C28 C35
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C26 C28 C27 C48
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C25 C27 C26 C61
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C22 C24 C23 C60
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C21 C23 C22 C59
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C18 C20 C19 C58
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C11 C19 C18 C57
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C11 C13 C12 C17
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C10 C12 C11 C18
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C5 C9 C10 C11
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C4 C6 C5 C10
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C3 C5 C4 C57
+ ** Warning: No sp2 improper torsion term for  ca-ca-ca-ca
+        atoms are: C2 C4 C3 C62
+ total 36 improper torsions applied
+Building H-Bond parameters.
+Incorporating Non-Bonded adjustments.
+Not Marking per-residue atom chain types.
+Marking per-residue atom chain types.
+  (Residues lacking connect0/connect1 - 
+   these don't have chain types marked:
+
+	res	total affected
+
+	C70	1
+	DBP	1
+  )
+ (no restraints)
+> 
+> quit
+	Quit

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+cp ../system_construction/states/configs.dat configs.dat
+rm -rf PRMTOP.EX
+cp -r ../system_construction/PRMTOP.EX .
+for config in 1 2 3; do
+	DONOR="EX";
+	frame=$(awk -v var="$config" 'NR==var {print $1}' configs.dat)
+	index1=$(awk -v var="$config" 'NR==var {print $2}' configs.dat)
+        index2=$(awk -v var="$config" 'NR==var {print $3}' configs.dat)
+	cp PRMTOP.EX/*_${config}_*prmtop config_${config}/
+	cd config_${config}	
+	for i in {1..5}
+	do
+
+		for state in $(ls *.prmtop | cut -f 3 -d "_"| cut -f 1 -d ".");do
+			cp ../ct_recalculate ct_recalculate_${config}_${state}_$i
+			sed -i "s/STATE/$state/g" ct_recalculate_${config}_${state}_$i
+			sed -i "s/DONOR/$DONOR/g" ct_recalculate_${config}_${state}_$i
+			sed -i "s/CONF/$config/g" ct_recalculate_${config}_${state}_$i
+			sed -i "s/NUM/$i/g" ct_recalculate_${config}_${state}_$i
+			sbatch ct_recalculate_${config}_${state}_$i
+		done
+
+	done
+
+	cd ..
+done

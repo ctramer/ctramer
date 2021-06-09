@@ -1,0 +1,18 @@
+HOLD THE SOLUTE STILL AND EQULIBRATE THE SOLVENT
+ &cntrl
+   igb = 0, imin = 1, ntx = 1, irest = 0,
+   ntb = 1, cut = 10.,
+   ntpr = 5, ntwx = 5, ntwe = 1,
+   nstlim = 1000, dt = 0.001,
+   ntc = 2, ntf = 2, iwrap = 0,
+   ntt = 3, gamma_ln=0.1,
+   tempi = 298.15, temp0 = 298.15,
+   tautp = 0.5, ig = -1, vlimit = 10.0,
+   nmropt = 0,
+   ipol   = 0,
+   ntr    = 0,
+   ioutfm = 1,
+   maxcyc = 1,
+   ncyc = 10
+ &end
+

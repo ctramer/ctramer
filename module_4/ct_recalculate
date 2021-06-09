@@ -1,0 +1,43 @@
+#!/bin/bash
+#SBATCH  -J E_CONF_STATE_NUM            # Job Name
+#SBATCH  -o E_CONF_STATE_NUM.o%j        # Output and error file name (%j expands to jobID)
+#SBATCH  -N 1                   # Number of nodes, ensure that all cores are on one machine
+#SBATCH  -n 28
+#SBATCH  -t 05:00:00	        # Run time (hh:mm:ss)
+
+date
+
+module purge
+module load AMBER
+
+#Set up SLURM directory in scratch space with necessary files
+rundir=/$TMPDIR/"$SLURM_JOB_USER"_"$SLURM_JOB_ID"
+/bin/rm -rf $rundir
+/bin/mkdir -p $rundir
+
+cp prd_CONF_energy.in $rundir
+cp CONF_DONOR_TRAJ_DONOR_NUM.nc $rundir
+cp CONF_DONOR_TRAJ_DONOR_NUM.rst $rundir
+cp AAADDD_CONF_STATE.prmtop $rundir
+cp AAADDD_CONF.rst $rundir
+
+cd $rundir
+
+sander=$AMBERHOME/bin/sander.MPI
+    
+date
+  #calculates energy for donor PES on above trajectory
+  mpirun sander.MPI                  \
+  -O -i prd_CONF_energy.in -o CONF_STATE_ENER_DONOR_NUM.out     \
+  -p AAADDD_CONF_STATE.prmtop -c CONF_DONOR_TRAJ_DONOR_NUM.rst  \
+  -r CONF_STATE_ENER_DONOR_NUM.rst  -y CONF_DONOR_TRAJ_DONOR_NUM.nc \
+  -ref AAADDD_CONF.rst
+
+#moves all files back to original directory
+cp -auv * $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR/
+rm -rf $rundir/
+
+date
+
+echo Done!

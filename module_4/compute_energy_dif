@@ -1,0 +1,18 @@
+#!/bin/bash
+
+for config in 1 2 3;do
+	
+	cd config_${config}
+	grep EAMBER CONF_DONOR_ENE_DONOR_*.out > energies_DONOR.dat
+        awk '{print $3}' energies_DONOR.dat > CONF_DONOR_ENE_DONOR.dat
+	for state in $(ls *.prmtop | cut -f 3 -d "_"| cut -f 1 -d ".");do
+		
+		grep EAMBER CONF_ACCEPTOR_ENE_DONOR.out > energies_ACCEPTOR.dat
+		awk '{print $3}' energies_ACCEPTOR.dat > CONF_ACCEPTOR_ENE_DONOR.dat
+
+		
+
+  		rm energies*
+	done
+
+done
