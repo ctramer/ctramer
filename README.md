@@ -1,6 +1,9 @@
 Code for CTRAMER v 1.0.0
 
-Software is divided in five modules, each of which focus on a specific calculation
+Please consult the following paper for a more detailed description of the features, architecture, guidelines for usage, and scientific justification of CTRAMER. When using CTRAMER, please cite:
+	Jacob Tinnin, Huseyin Aksu, Zhengqing Tong, Pengzhi Zhang, Eitan Geva, Barry D. Dunietz, Xiang Sun, and Margaret S. Cheung , "CTRAMER: An open-source software package for correlating interfacial charge transfer rate constants with donor/acceptor geometries in organic photovoltaic materials", The Journal of Chemical Physics 154, 214108 (2021) https://doi.org/10.1063/5.0050574
+
+Software is divided in five modules, each of which focus on a specific calculation:
 1)	Module 1: Molecule-level electronic structure calculations
 	a)	RUN_DFTFUNC.sh calculates ground state charges for each molecule
 2)	Module 2: Condensed-phase molecular dynamics simulations
