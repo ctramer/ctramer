@@ -1,4 +1,4 @@
-Code for CTRAMER v 0.9
+Code for CTRAMER v 1.0.0
 
 Software is divided in five modules, each of which focus on a specific calculation
 1)	Module 1: Molecule-level electronic structure calculations
