@@ -1,8 +1,0 @@
-COMMENT
- &cntrl
-  imin 	= 1,
-  cut 	= 10.,
-  maxcyc= 5000,
-  ncyc	= 500,
-  ntb 	= 1,
-&end
