@@ -13,7 +13,7 @@ for config in 1 2 3; do
         rm -rf config_${config}
         mkdir config_${config}
 
-        cp extract.tcl config_${config}/extract_frame.tcl
+    cp extract_frame.tcl config_${config}/extract_frame.tcl
 	cp reform_charge.pl config_${config}/reform_charge.pl
 	cp ${MOL1}.mol2 config_${config}/${MOL1}.mol2
 	cp ${MOL2}.mol2 config_${config}/${MOL2}.mol2
