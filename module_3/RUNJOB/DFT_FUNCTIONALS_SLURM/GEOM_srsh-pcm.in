@@ -1,0 +1,49 @@
+$molecule
+read                 GEOM.txt
+$end
+
+$XC_FUNCTIONAL
+X HF     .200
+X PBE    0.73
+X wPBE   0.07
+C PBE    1.00
+$end
+
+$rem
+jobtype               sp
+exchange              general
+correlation           none
+basis                 6-31G*
+omega                 155
+omega2                155
+lrc_dft               true
+src_dft               2
+HF_SR                 200
+HF_LR                 267
+RPA                   2
+CIS_N_ROOTS           40
+CIS_SINGLETS          TRUE
+CIS_TRIPLETS          FALSE
+pop_mulliken          -1
+sts_fcd               true
+sts_acceptor          1-70
+sts_donor             71-170
+scf_convergence       5
+max_scf_cycles        5000
+mem_static            2000
+mem_total             10000
+print_general_basis   true
+print_orbitals        10
+molden_format         true
+solvent_method        pcm
+$end
+
+$pcm
+Theory          pcm
+Method          SWIG
+Solver          Inversion
+HeavyPoints     194
+Hpoints         194
+Radii           bondi
+vdwScale        1.2
+$end

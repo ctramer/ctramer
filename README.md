@@ -24,3 +24,9 @@ Software is divided in five modules, each of which focus on a specific calculati
 Please consult the following paper for a more detailed description of the features, architecture, guidelines for usage, and scientific justification of CTRAMER. When using CTRAMER, please cite:
 
 Jacob Tinnin, Huseyin Aksu, Zhengqing Tong, Pengzhi Zhang, Eitan Geva, Barry D. Dunietz, Xiang Sun, and Margaret S. Cheung , "CTRAMER: An open-source software package for correlating interfacial charge transfer rate constants with donor/acceptor geometries in organic photovoltaic materials", The Journal of Chemical Physics 154, 214108 (2021) https://doi.org/10.1063/5.0050574
+
+
+
+Example data provided was used to produce the results in:
+
+Jacob Tinnin, Srijana Bhandari, Pengzhi Zhang, Eitan Geva, Barry D. Dunietz, Xiang Sun, and Margaret S. Cheung, "Correlating Interfacial Charge Transfer Rates with Interfacial Molecular Structure in the Tetraphenyldibenzoperiflanthene/C70 Organic Photovoltaic System", The Journal of Physical Chemistry Letters 2022, (2022) https://doi.org/10.1021/acs.jpclett.1c03618
