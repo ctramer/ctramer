@@ -1,14 +1,14 @@
 Example data for CTRAMER
 
-1)	Module 1: Molecule-level electronic structure calculations
+1)	Module 1: Molecule-level electronic structure calculations<br/>
 	a)	xyz files for dbp and c70, used as inputs for Q-Chem
-2)	Module 2: Condensed-phase molecular dynamics simulations
-	a)	txt files are Mulliken charges from Module 1
+2)	Module 2: Condensed-phase molecular dynamics simulations<br/>
+	a)	txt files are Mulliken charges from Module 1<br/>
 	b)  pdb and mol2 files are input files for Packmol, to create AMBER input files
-3)	Module 3: Molecular pair-level electronic structure calculations
+3)	Module 3: Molecular pair-level electronic structure calculations<br/>
 	a)	xyz files for the four selected structures
-4)	Modules 4 and 5: Fixed pair molecular dynamics simulations
-	a)	All the necessary files for rate calculations
+4)	Modules 4 and 5: Fixed pair molecular dynamics simulations<br/>
+	a)	All the necessary files for rate calculations<br/>
 	b)  Output files from Module 4 are very large and include randomness, better to compare to results in paper
 
 
